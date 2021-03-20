@@ -16,9 +16,6 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-library.add(faTrash);
 
 export default Vue.extend({
   name: 'TodoListItem',
