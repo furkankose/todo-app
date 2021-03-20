@@ -12,9 +12,12 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "axios": "^0.21.1",
     "vue": "^2.6.10"
   },
   "devDependencies": {
+    "@pact-foundation/pact": "^9.15.3",
+    "@types/axios": "^0.14.0",
     "@types/jest": "^23.1.4",
     "@vue/cli-plugin-e2e-cypress": "^3.0.5",
     "@vue/cli-plugin-eslint": "^3.0.5",
@@ -28,6 +31,7 @@
     "eslint": "^5.16.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-vue": "^5.0.0",
+    "jest-pact": "^0.8.3",
     "prettier": "^1.18.2",
     "ts-jest": "^23.0.0",
     "typescript": "^3.4.3",
