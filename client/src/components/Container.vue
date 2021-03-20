@@ -15,7 +15,8 @@ export default Vue.extend({
 <style scoped>
 .container {
   max-width: 500px;
-  margin: 20px auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @media only screen and (max-width: 768px) {
