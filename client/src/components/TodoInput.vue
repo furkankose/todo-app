@@ -1,5 +1,5 @@
 <template>
-  <div id="todo-input-wrapper">
+  <div class="todo-input-wrapper">
     <input
       v-model="todo"
       class="todo-input"

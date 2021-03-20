@@ -1,28 +1,37 @@
 <template>
   <div id="app">
-    <div class="container border mb-80">
+    <Container class="mb-80">
       <TodoInput v-model="newTodo" />
-    </div>
-    <div class="container border">
-      <TodoList :items="todos" />
-    </div>
+    </Container>
+    <Container>
+      <TodoList>
+        <TodoListItem
+          v-for="(todo, i) in todos"
+          :title="todo.title"
+          :is-completed="todo.isCompleted"
+          :key="i"
+          @complete="isCompleted => updateTodo(i, isCompleted)"
+          @delete="deleteTodo(i)"
+        />
+      </TodoList>
+    </Container>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import Container from './components/Container.vue';
 import TodoInput from './components/TodoInput.vue';
 import TodoList from './components/TodoList.vue';
-
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-library.add(faTrash);
+import TodoListItem from './components/TodoListItem.vue';
 
 export default Vue.extend({
   name: 'App',
   components: {
+    Container,
     TodoInput,
     TodoList,
+    TodoListItem,
   },
   data() {
     return {
@@ -47,6 +56,14 @@ export default Vue.extend({
       ],
     };
   },
+  methods: {
+    updateTodo(index: number, isCompleted: boolean) {
+      console.log('updated', index, isCompleted);
+    },
+    deleteTodo(index: number) {
+      console.log('deleted', index);
+    },
+  },
 });
 </script>
 
@@ -62,23 +79,6 @@ export default Vue.extend({
 
 body {
   background-color: #8f4df8;
-}
-
-.container {
-  max-width: 500px;
-  margin: 20px auto;
-}
-
-@media only screen and (max-width: 768px) {
-  .container {
-    max-width: calc(100% - 64px);
-  }
-}
-
-.border {
-  background: #fff;
-  border-radius: 1px;
-  box-shadow: 0px 0px 0px 6px rgba(255, 255, 255, 0.3);
 }
 
 .mb-80 {
