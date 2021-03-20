@@ -9,11 +9,8 @@
     <span :class="{ completed: isCompleted }" class="todo-list-item-text">
       {{ title }}
     </span>
-    <font-awesome-icon
-      icon="trash"
-      class="todo-list-item-button"
-      @click="emitDeleteEvent"
-    />
+
+    <i class="fas fa-trash todo-list-item-button" @click="emitDeleteEvent"></i>
   </li>
 </template>
 
