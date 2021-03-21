@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Container class="mb-80">
-      <TodoInput v-model="newTodo" />
+      <TodoInput @add="createTodo" />
     </Container>
     <Container>
       <TodoList>
@@ -57,6 +57,9 @@ export default Vue.extend({
     };
   },
   methods: {
+    createTodo(title: string) {
+      console.log('created', title);
+    },
     updateTodo(index: number, isCompleted: boolean) {
       console.log('updated', index, isCompleted);
     },

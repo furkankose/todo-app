@@ -2,11 +2,12 @@
   <div class="todo-input-wrapper">
     <input
       v-model="todo"
+      @keyup.enter="emitAddEvent"
       class="todo-input"
       type="text"
       placeholder="What will you do today?"
     />
-    <button @click="emitInputEvent" :disabled="!todo" class="todo-input-button">
+    <button @click="emitAddEvent" :disabled="!todo" class="todo-input-button">
       ADD
     </button>
   </div>
@@ -17,25 +18,15 @@ import Vue from 'vue';
 
 export default Vue.extend({
   name: 'TodoInput',
-  props: {
-    value: {
-      type: String,
-      required: true,
-    },
-  },
   data() {
     return {
       todo: null,
     };
   },
-  watch: {
-    value(newTodo) {
-      this.todo = newTodo;
-    },
-  },
   methods: {
-    emitInputEvent() {
-      this.$emit('input', this.todo);
+    emitAddEvent() {
+      this.$emit('add', this.todo);
+      this.todo = null;
     },
   },
 });
