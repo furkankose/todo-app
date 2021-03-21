@@ -2,7 +2,7 @@ import { pactWith } from 'jest-pact';
 import { Matchers } from '@pact-foundation/pact';
 import axios from 'axios';
 import httpAdapter from 'axios/lib/adapters/http';
-import { ApiService } from '@/service';
+import { ApiService } from '@/api/serviceFactory';
 
 axios.defaults.adapter = httpAdapter;
 const { eachLike, like } = Matchers;
@@ -18,10 +18,11 @@ pactWith({ consumer: 'TodoConsumer', provider: 'TodoProvider' }, provider => {
 
   const todo = {
     ...todoWithoutId,
-    id: '6055adcb678f6833e4058463',
+    _id: '6055adcb678f6833e4058463',
   };
 
   beforeAll(() => {
+    console.log('provider.mockService.baseUrl', provider.mockService.baseUrl);
     TodoService = new ApiService('todos', provider.mockService.baseUrl);
   });
 
@@ -75,7 +76,7 @@ pactWith({ consumer: 'TodoConsumer', provider: 'TodoProvider' }, provider => {
 
     it('returns todos', async () => {
       const returnedTodos = await TodoService.getAll();
-      expect(returnedTodos.length).toEqual(MIN_TODOS);
+      expect(returnedTodos.length).toBeGreaterThanOrEqual(MIN_TODOS);
       expect(returnedTodos[0]).toEqual(todo);
     });
   });

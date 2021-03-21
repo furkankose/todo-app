@@ -1,5 +1,5 @@
-interface Todo {
-  id?: string;
+export interface Todo {
+  _id?: string;
   title: string;
   isCompleted: boolean;
 }
