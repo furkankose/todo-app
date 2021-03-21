@@ -28,10 +28,9 @@ describe('TodoListItem.vue', () => {
     const wrapper = shallowMount(TodoListItem, {
       propsData: { title, isCompleted },
     });
-    const checkbox = wrapper.find('input');
-    (checkbox.element as HTMLInputElement).checked = expectedValue;
+    const checkbox = wrapper.find('.checkbox');
 
-    checkbox.trigger('change');
+    checkbox.trigger('click');
     expect(wrapper.emitted().complete[0][0]).toEqual(expectedValue);
   });
 

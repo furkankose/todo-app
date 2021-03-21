@@ -1,11 +1,11 @@
 <template>
   <li class="todo-list-item">
-    <input
-      :value="isCompleted"
-      @change="emitCompleteEvent"
-      class="checkbox"
-      type="checkbox"
-    />
+    <i
+      class="fas checkbox"
+      :class="{ 'fa-square': !isCompleted, 'fa-check-square': isCompleted }"
+      @click="emitCompleteEvent"
+    ></i>
+
     <span :class="{ completed: isCompleted }" class="todo-list-item-text">
       {{ title }}
     </span>
@@ -41,6 +41,15 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+.checkbox {
+  cursor: pointer;
+  color: #757575;
+}
+
+.checkbox:hover {
+  opacity: 0.8;
+}
+
 .todo-list-items {
   padding: 0;
   text-align: left;
