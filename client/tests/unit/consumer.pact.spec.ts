@@ -22,7 +22,6 @@ pactWith({ consumer: 'TodoConsumer', provider: 'TodoProvider' }, provider => {
   };
 
   beforeAll(() => {
-    console.log('provider.mockService.baseUrl', provider.mockService.baseUrl);
     TodoService = new ApiService('todos', provider.mockService.baseUrl);
   });
 
@@ -36,13 +35,13 @@ pactWith({ consumer: 'TodoConsumer', provider: 'TodoProvider' }, provider => {
           path: '/todos',
           body: like(todoWithoutId),
           headers: {
-            'Content-Type': 'application/json;charset=utf-8',
+            'Content-Type': 'application/json',
           },
         },
         willRespondWith: {
           status: 200,
           headers: {
-            'Content-Type': 'application/json;charset=utf-8',
+            'Content-Type': 'application/json',
           },
           body: like(todo),
         },
@@ -116,13 +115,13 @@ pactWith({ consumer: 'TodoConsumer', provider: 'TodoProvider' }, provider => {
           path: '/todos/6055adcb678f6833e4058463',
           body: like(todo),
           headers: {
-            'Content-Type': 'application/json;charset=utf-8',
+            'Content-Type': 'application/json',
           },
         },
         willRespondWith: {
           status: 200,
           headers: {
-            'Content-Type': 'application/json;charset=utf-8',
+            'Content-Type': 'application/json',
           },
           body: like(todo),
         },
@@ -150,7 +149,7 @@ pactWith({ consumer: 'TodoConsumer', provider: 'TodoProvider' }, provider => {
         willRespondWith: {
           status: 200,
           headers: {
-            'Content-Type': 'application/json;charset=utf-8',
+            'Content-Type': 'application/json',
           },
           body: like(todo),
         },
