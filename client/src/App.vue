@@ -3,15 +3,18 @@
     <Container class="mb-80">
       <TodoInput @add="createTodo" />
     </Container>
-    <Container>
+    <Preloader v-if="isLoading" />
+    <InfoMessage v-else-if="isThereAnyError">{{ error }} </InfoMessage>
+    <InfoMessage v-else-if="isTodoListEmpty">Nothing to do!</InfoMessage>
+    <Container v-else>
       <TodoList>
         <TodoListItem
-          v-for="(todo, i) in todos"
-          :title="todo.title"
-          :is-completed="todo.isCompleted"
+          v-for="(item, i) in todoList"
+          :title="item.title"
+          :is-completed="item.isCompleted"
           :key="i"
           @complete="isCompleted => updateTodo(i, isCompleted)"
-          @delete="deleteTodo(i)"
+          @delete="removeTodo(i)"
         />
       </TodoList>
     </Container>
@@ -20,52 +23,96 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { ApiService } from './api/serviceFactory';
+import { Todo } from './todo';
 import Container from './components/Container.vue';
+import Preloader from './components/Preloader.vue';
+import InfoMessage from './components/InfoMessage.vue';
 import TodoInput from './components/TodoInput.vue';
 import TodoList from './components/TodoList.vue';
 import TodoListItem from './components/TodoListItem.vue';
+
+const todoService = new ApiService('todos');
 
 export default Vue.extend({
   name: 'App',
   components: {
     Container,
+    Preloader,
+    InfoMessage,
     TodoInput,
     TodoList,
     TodoListItem,
   },
-  data() {
+  data(): {
+    todoService: ApiService;
+    todo: string;
+    todoList: Todo[];
+    error: string;
+    isLoading: boolean;
+  } {
     return {
-      newTodo: '',
-      todos: [
-        {
-          title: 'Title 1',
-          isCompleted: false,
-        },
-        {
-          title: 'Title 2',
-          isCompleted: true,
-        },
-        {
-          title: 'Title 3',
-          isCompleted: false,
-        },
-        {
-          title: 'Title 4',
-          isCompleted: false,
-        },
-      ],
+      todoService,
+      todo: '',
+      todoList: [],
+      error: '',
+      isLoading: true,
     };
   },
+  computed: {
+    isThereAnyError(): boolean {
+      return this.error !== '';
+    },
+    isTodoListEmpty(): boolean {
+      return this.todoList.length === 0;
+    },
+  },
   methods: {
-    createTodo(title: string) {
-      console.log('created', title);
+    async fetchTodoList(): Promise<any> {
+      try {
+        this.todoList = await this.todoService.getAll();
+      } catch (error) {
+        this.error = error;
+      }
+
+      this.isLoading = false;
     },
-    updateTodo(index: number, isCompleted: boolean) {
-      console.log('updated', index, isCompleted);
+    async createTodo(title: string): Promise<any> {
+      this.isLoading = true;
+      const todo = { title, isCompleted: false };
+      try {
+        const createdTodo = await this.todoService.create(todo);
+        this.todoList.push(createdTodo);
+      } catch (error) {
+        console.log({ ...error });
+      }
+      this.isLoading = false;
     },
-    deleteTodo(index: number) {
-      console.log('deleted', index);
+    async updateTodo(index: number, isCompleted: boolean): Promise<any> {
+      this.isLoading = true;
+      const todo = { ...this.todoList[index], isCompleted };
+      try {
+        await this.todoService.update(todo._id as string, todo);
+        this.todoList[index].isCompleted = isCompleted;
+      } catch (error) {
+        console.log({ ...error });
+      }
+      this.isLoading = false;
     },
+    async removeTodo(index: number): Promise<any> {
+      this.isLoading = true;
+      const { _id } = this.todoList[index];
+      try {
+        await this.todoService.remove(_id as string);
+        this.todoList.splice(index, 1);
+      } catch (error) {
+        console.log({ ...error });
+      }
+      this.isLoading = false;
+    },
+  },
+  mounted() {
+    this.fetchTodoList();
   },
 });
 </script>
