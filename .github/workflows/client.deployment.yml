@@ -1,0 +1,36 @@
+name: todo-client-deployment
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "client/*"
+      - "client/**"
+
+defaults:
+  run:
+    working-directory: client
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Google Cloud CLI
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          version: "290.0.1"
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_KEYFILE }}
+
+      - name: Create env file
+        run: echo "${{ secrets.VUE_BUILD_ENV }}" > .env
+
+      - name: Build docker image and push it to Google Container Registry
+        run: gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT_ID }}/todo-client
+
+      - name: Deploy image to cloud run
+        run: gcloud run deploy todo-client --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/todo-client --platform managed --region ${{ secrets.GCP_REGION }} --set-env-vars NODE_ENV=${{ secrets.NODE_ENV }}
