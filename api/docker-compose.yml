@@ -28,6 +28,7 @@ services:
       - TODO_MONGODB_CONNECTION_STRING=mongodb://mongodb/case
     depends_on:
       - mongodb
+      - mongodb-seed
 
   production:
     build: .

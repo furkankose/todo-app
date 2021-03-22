@@ -5,7 +5,7 @@ import * as mongoosePaginate from 'mongoose-paginate-v2';
 
 export type TodoDocument = Todo & mongoose.Document;
 
-@Schema()
+@Schema({ versionKey: false })
 export class Todo {
   @ApiProperty()
   @Prop()
