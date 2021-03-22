@@ -4,7 +4,7 @@
 
 ### Tech Stack
 
-The project is built with NestJS + VueJS + MongoDB + Docker.
+The project is built with NestJS + VueJS + MongoDB + Docker. All parts of the project are running on Google Cloud Run.
 
 ### Tools
 
@@ -18,7 +18,7 @@ To ensure that all commit messages meet the [conventional commit format](https:/
 
 #### Pact
 
-To verify integration between api and client independently in order to test what has been passed and see if what is returned matches with the contract.
+To verify integration between api and client independently, Pact is used. Thanks to Pact, you can test what has been passed and see if what is returned matches with the contract.
 
 #### GitHub Actions
 
