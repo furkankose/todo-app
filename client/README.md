@@ -1,36 +1,43 @@
-# todo-client
+# Todo Client
 
-## Project setup
-```
-npm install
-```
+## Running the app
 
-### Compiles and hot-reloads for development
-```
-npm run serve
+1.  Create .env file by cloning the [.env.sample](/client/.env.sample)
+
+```bash
+$ cp .env.sample .env
 ```
 
-### Compiles and minifies for production
-```
-npm run build
+2.  Fill the .env file with corresponding variables
+
+3.  Install packages
+
+```bash
+$ yarn install
 ```
 
-### Run your tests
-```
-npm run test
+4. Run the app
+
+```bash
+$ yarn serve
 ```
 
-### Lints and fixes files
-```
-npm run lint
+## Running tests
+
+1.  Create .env file by cloning the [.env.sample](/client/.env.sample)
+
+```bash
+$ cp .env.sample .env
 ```
 
-### Run your end-to-end tests
-```
-npm run test:e2e
-```
+2.  Fill the .env file with corresponding variables
 
-### Run your unit tests
-```
-npm run test:unit
+3.  Run the tests
+
+```bash
+# unit tests
+$ yarn test:unit
+
+# unit tests
+$ yarn test:e2e
 ```
