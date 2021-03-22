@@ -18,9 +18,7 @@ To ensure that all commit messages meet the [conventional commit format](https:/
 
 #### Pact
 
-Pact provides a fluent API for service consumers to define the HTTP requests they will make to a service provider and the HTTP responses they expect back. These expectations are used in the consumer specs to provide a mock service provider. The interactions are recorded, and played back in the service provider specs to ensure the service provider actually does provide the response the consumer expects.
-
-It is used for allowing you to test of both sides of an integration point using fast unit tests.
+To verify integration between api and client independently in order to test what has been passed and see if what is returned matches with the contract.
 
 #### GitHub Actions
 
