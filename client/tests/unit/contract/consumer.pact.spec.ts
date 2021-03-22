@@ -141,7 +141,7 @@ pactWith({ consumer: 'TodoConsumer', provider: 'TodoProvider' }, provider => {
     beforeAll(() =>
       provider.addInteraction({
         state: 'is ready to removed a spesific todo',
-        uponReceiving: 'a request to removed a spesific todo',
+        uponReceiving: 'a request to remove a spesific todo',
         withRequest: {
           method: 'DELETE',
           path: '/todos/6055adcb678f6833e4058463',
