@@ -1,0 +1,36 @@
+name: todo-client-pr
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "client/*"
+      - "client/**"
+
+defaults:
+  run:
+    working-directory: client
+
+jobs:
+  pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run eslint
+        run: yarn lint
+
+      - name: Run unit tests
+        run: yarn test:unit
+
+      - name: Run e2e tests
+        run: yarn test:e2e
