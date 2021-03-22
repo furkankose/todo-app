@@ -27,7 +27,7 @@ jobs:
         run: yarn install
 
       - name: Run pact test
-        run: yarn test:contract
+        run: yarn test:pact
 
       - name: Publish pact file
-        run: yarn contract:publish
+        run: yarn pact:publish
