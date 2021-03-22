@@ -1,0 +1,33 @@
+name: todo-contract-publish
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "client/tests/unit/contract/*"
+      - "client/tests/unit/contract/**"
+
+defaults:
+  run:
+    working-directory: client
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    env:
+      TODO_PACT_BROKER: ${{ secrets.TODO_PACT_BROKER }}
+      TODO_PACT_BROKER_TOKEN: ${{ secrets.TODO_PACT_BROKER_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run pact test
+        run: yarn test:contract
+
+      - name: Publish pact file
+        run: yarn contract:publish

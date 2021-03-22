@@ -7,6 +7,8 @@ on:
     paths:
       - "client/*"
       - "client/**"
+      - "!client/tests/unit/contract/*"
+      - "!client/tests/unit/contract/**"
 
 defaults:
   run:

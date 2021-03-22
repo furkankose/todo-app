@@ -7,7 +7,9 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "test:pact": "jest tests/unit/contract/consumer.pact.spec.ts",
+    "pact:publish": "node pact.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",

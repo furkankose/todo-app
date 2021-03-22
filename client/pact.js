@@ -1,11 +1,12 @@
 // ./pact/publish.js
 const { Publisher } = require('@pact-foundation/pact');
+const packageJson = require('./package.json');
 const path = require('path');
 const opts = {
   pactFilesOrDirs: [path.resolve(process.cwd(), 'pact/pacts')],
-  pactBroker: 'https://furkan.pactflow.io',
-  pactBrokerToken: process.env.TODO_PACT_TOKEN,
-  consumerVersion: '2.0.0',
+  pactBroker: process.env.TODO_PACT_BROKER,
+  pactBrokerToken: process.env.TODO_PACT_BROKER_TOKEN,
+  consumerVersion: packageJson.version,
 };
 
 new Publisher(opts)
