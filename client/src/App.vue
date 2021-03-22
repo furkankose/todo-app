@@ -18,6 +18,7 @@
         />
       </TodoList>
     </Container>
+    <vue-snotify />
   </div>
 </template>
 
@@ -83,30 +84,34 @@ export default Vue.extend({
       try {
         const createdTodo = await this.todoService.create(todo);
         this.todoList.push(createdTodo);
+        this.$snotify.info(`"${title}" created successfully!`);
       } catch (error) {
-        console.log({ ...error });
+        this.$snotify.error({ ...error });
       }
       this.isLoading = false;
     },
     async updateTodo(index: number, isCompleted: boolean): Promise<any> {
       this.isLoading = true;
       const todo = { ...this.todoList[index], isCompleted };
+      const status = isCompleted ? 'complete' : 'incomplete';
       try {
         await this.todoService.update(todo._id as string, todo);
         this.todoList[index].isCompleted = isCompleted;
+        this.$snotify.success(`"${todo.title}" marked as ${status}!`);
       } catch (error) {
-        console.log({ ...error });
+        this.$snotify.error({ ...error });
       }
       this.isLoading = false;
     },
     async removeTodo(index: number): Promise<any> {
       this.isLoading = true;
-      const { _id } = this.todoList[index];
+      const { _id, title } = this.todoList[index];
       try {
         await this.todoService.remove(_id as string);
         this.todoList.splice(index, 1);
+        this.$snotify.success(`"${title}" removed successfully!`);
       } catch (error) {
-        console.log({ ...error });
+        this.$snotify.error({ ...error });
       }
       this.isLoading = false;
     },
