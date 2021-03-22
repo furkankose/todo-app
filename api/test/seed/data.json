@@ -1,0 +1,9 @@
+[
+  {
+    "_id": {
+      "$oid": "6055adcb678f6833e4058463"
+    },
+    "title": "First todo item",
+    "isCompleted": true
+  }
+]
