@@ -1,0 +1,34 @@
+name: todo-api-pr
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "api/*"
+      - "api/**"
+
+defaults:
+  run:
+    working-directory: api
+
+jobs:
+  pr:
+    runs-on: ubuntu-latest
+
+    env:
+      TODO_PACT_BROKER: ${{ secrets.TODO_PACT_BROKER }}
+      TODO_PACT_BROKER_TOKEN: ${{ secrets.TODO_PACT_BROKER_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Run application
+        run: docker-compose up --build --detach production
+
+      - name: Verify pact contract
+        run: node pact.js
