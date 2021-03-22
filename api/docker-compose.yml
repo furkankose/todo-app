@@ -1,0 +1,41 @@
+version: '3.4'
+
+services:
+  mongodb:
+    image: mongo
+    networks:
+      - todo
+    ports:
+      - 27017:27017
+
+  test:
+    build:
+      context: .
+      target: test
+    container_name: todo-api-test
+    networks:
+      - todo
+    environment:
+      - NODE_ENV=test
+      - PORT=3000
+      - TODO_MONGODB_CONNECTION_STRING=mongodb://mongodb/case
+    depends_on:
+      - mongodb
+
+  production:
+    build: .
+    container_name: todo-api-production
+    ports:
+      - 3000:3000
+    networks:
+      - todo
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - TODO_MONGODB_CONNECTION_STRING=mongodb://mongodb/case
+    depends_on:
+      - mongodb
+
+networks:
+  todo:
+    driver: bridge
