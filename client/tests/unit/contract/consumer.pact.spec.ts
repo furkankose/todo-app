@@ -9,7 +9,7 @@ const { eachLike, like } = Matchers;
 
 pactWith({ consumer: 'TodoConsumer', provider: 'TodoProvider' }, provider => {
   let TodoService: ApiService;
-  const MIN_TODOS = 2;
+  const MIN_TODOS = 1;
 
   const todoWithoutId = {
     title: 'First todo item',
@@ -17,8 +17,8 @@ pactWith({ consumer: 'TodoConsumer', provider: 'TodoProvider' }, provider => {
   };
 
   const todo = {
-    ...todoWithoutId,
     _id: '6055adcb678f6833e4058463',
+    ...todoWithoutId,
   };
 
   beforeAll(() => {
@@ -33,15 +33,15 @@ pactWith({ consumer: 'TodoConsumer', provider: 'TodoProvider' }, provider => {
         withRequest: {
           method: 'POST',
           path: '/todos',
-          body: like(todoWithoutId),
+          body: todoWithoutId,
           headers: {
             'Content-Type': 'application/json',
           },
         },
         willRespondWith: {
-          status: 200,
+          status: 201,
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json; charset=utf-8',
           },
           body: like(todo),
         },
@@ -68,7 +68,7 @@ pactWith({ consumer: 'TodoConsumer', provider: 'TodoProvider' }, provider => {
           headers: {
             'Content-Type': 'application/json; charset=utf-8',
           },
-          body: eachLike(todo, { min: MIN_TODOS }),
+          body: eachLike(todo),
         },
       }),
     );
@@ -113,7 +113,7 @@ pactWith({ consumer: 'TodoConsumer', provider: 'TodoProvider' }, provider => {
         withRequest: {
           method: 'PATCH',
           path: '/todos/6055adcb678f6833e4058463',
-          body: like(todo),
+          body: todo,
           headers: {
             'Content-Type': 'application/json',
           },
@@ -121,7 +121,7 @@ pactWith({ consumer: 'TodoConsumer', provider: 'TodoProvider' }, provider => {
         willRespondWith: {
           status: 200,
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json; charset=utf-8',
           },
           body: like(todo),
         },
@@ -149,7 +149,7 @@ pactWith({ consumer: 'TodoConsumer', provider: 'TodoProvider' }, provider => {
         willRespondWith: {
           status: 200,
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json; charset=utf-8',
           },
           body: like(todo),
         },
